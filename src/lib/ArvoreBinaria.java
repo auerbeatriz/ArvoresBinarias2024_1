@@ -5,19 +5,18 @@
  */
 package lib;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
  *
  * @author victoriocarvalho
  */
-public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
+public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     
-    protected NoExemplo<T> raiz = null;
+    protected No<T> raiz = null;
     protected Comparator<T> comparador; 
   
-    public ArvoreBinariaExemplo(Comparator<T> comp) {
+    public ArvoreBinaria(Comparator<T> comp) {
         comparador = comp;
     }
     
@@ -26,17 +25,17 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
         this.raiz = this.adicionar(this.raiz, novoValor);
     }
 
-    private NoExemplo<T> adicionar(NoExemplo<T> raiz, T novoValor) {
+    private No<T> adicionar(No<T> raiz, T novoValor) {
         // Raiz da árvore está nula: ponto de inserção (pode ser da árvore original, ou de uma subárvore)
         if(raiz == null) {
-            raiz = new NoExemplo<T>(novoValor);
+            raiz = new No<T>(novoValor);
         }
         else {
             // novoValor menor que o valor da raíz: o novo nó deverá ser inserido na subárvore à direita
             if(this.comparador.compare(raiz.getValor(), novoValor) < 0)
                 raiz.setFilhoDireita(this.adicionar(raiz.getFilhoDireita(), novoValor));
 
-                // novoValor maior que o valor da raíz: o novo nó deverá ser inserido na subárvore à esquerda
+            // novoValor maior que o valor da raíz: o novo nó deverá ser inserido na subárvore à esquerda
             else
                 raiz.setFilhoEsquerda(this.adicionar(raiz.getFilhoEsquerda(), novoValor));
         }
