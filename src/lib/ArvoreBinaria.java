@@ -25,28 +25,49 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         this.raiz = this.adicionar(this.raiz, novoValor);
     }
 
+    /**
+     * Esse método é recursivo porque achamos mais legível e limpo, apesar de consumir mais memória
+     * Procura o ponto de inserção ao dividir a árvore em subárvores
+     * O primeiro nó raiz nulo que encontrar deve ser o ponto de inserção, pois significa que chegou ao fim da arvore analisada
+     * Senão, busca recursivamente o ponto de inserção analisando a subarvore correspondente, seja o valor
+     * de inserção menor ou maior que o valor do nó raíz analisado
+     * */
     private No<T> adicionar(No<T> raiz, T novoValor) {
-        // Raiz da árvore está nula: ponto de inserção (pode ser da árvore original, ou de uma subárvore)
         if(raiz == null) {
             raiz = new No<T>(novoValor);
         }
         else {
-            // novoValor menor que o valor da raíz: o novo nó deverá ser inserido na subárvore à direita
-            if(this.comparador.compare(raiz.getValor(), novoValor) < 0)
-                raiz.setFilhoDireita(this.adicionar(raiz.getFilhoDireita(), novoValor));
-
-            // novoValor maior que o valor da raíz: o novo nó deverá ser inserido na subárvore à esquerda
-            else
+            if(this.comparador.compare(novoValor, raiz.getValor()) < 0)
                 raiz.setFilhoEsquerda(this.adicionar(raiz.getFilhoEsquerda(), novoValor));
+            else
+                raiz.setFilhoDireita(this.adicionar(raiz.getFilhoDireita(), novoValor));
         }
 
-        // Retorna a árvore completa
         return raiz;
     }
 
+    /**
+     * Esse método de pesquisa iterativo se beneficia da inserção indexada da árvore para fazer a busca
+     * Esse método é iterativo porque achamos mais legível e limpo, além de economizar memória
+     * Em cada iteração, é obtido o nó raiz da subarvore analisada e compara o seu valor com o procurado
+     * Se a raiz estiver nula, siginifica que o resultado não foi encontrado
+     * Se não, então deve buscar na subárvore correspondente, seja o valor maior ou menor que a raiz da subarvore analisada
+     * */
     @Override
     public T pesquisar(T valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        No<T> noAtual = this.raiz;
+        while(noAtual != null) {
+            int resultadoComparacao  = this.comparador.compare(valor, noAtual.getValor());
+
+            if(resultadoComparacao  == 0)
+                return noAtual.getValor();
+            else if(resultadoComparacao  < 0)
+                noAtual = noAtual.getFilhoEsquerda();
+            else
+                noAtual = noAtual.getFilhoDireita();
+        }
+
+        return null;
     }
 
    @Override
