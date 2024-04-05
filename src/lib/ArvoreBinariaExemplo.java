@@ -23,7 +23,26 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
     
     @Override
     public void adicionar(T novoValor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.raiz = this.adicionar(this.raiz, novoValor);
+    }
+
+    private NoExemplo<T> adicionar(NoExemplo<T> raiz, T novoValor) {
+        // Raiz da árvore está nula: ponto de inserção (pode ser da árvore original, ou de uma subárvore)
+        if(raiz == null) {
+            raiz = new NoExemplo<T>(novoValor);
+        }
+        else {
+            // novoValor menor que o valor da raíz: o novo nó deverá ser inserido na subárvore à direita
+            if(this.comparador.compare(raiz.getValor(), novoValor) < 0)
+                raiz.setFilhoDireita(this.adicionar(raiz.getFilhoDireita(), novoValor));
+
+                // novoValor maior que o valor da raíz: o novo nó deverá ser inserido na subárvore à esquerda
+            else
+                raiz.setFilhoEsquerda(this.adicionar(raiz.getFilhoEsquerda(), novoValor));
+        }
+
+        // Retorna a árvore completa
+        return raiz;
     }
 
     @Override
