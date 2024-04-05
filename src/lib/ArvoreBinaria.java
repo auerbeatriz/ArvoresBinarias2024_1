@@ -72,7 +72,37 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
    @Override
     public T pesquisar(T valor, Comparator comparador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.pesquisar(valor, comparador, this.raiz);
+    }
+
+    /**
+     * Esse método é recursivo porque achamos mais legível e limpo, apesar de consumir mais memória
+     * Pesquisa recursivamente em todos os nós da árvore para encontrar o valor procurado
+     * Se a raiz for nula, significa que chegou ao fim da subárvore e o valor não foi encontrado
+     * Senão, avalia se é igual a raiz
+     * Se não for, busca recursivamente na subarvore à esquerda
+     * Se não encontrar na esquerda, então busca recursivamente na subarvore à direita
+     * Ele retorna o valor procurado, se for encontrado em alguma subarvore, ou null
+     *
+     * Tedx with the dev: o primeiro pensamento foi analisar as subarvores em paralelo, mas isso consumiria
+     * mais processamento do que o necessário, caso o nó já tivesse sido encontrado em alguma subarvore e estivesse
+     * analisando outra ao mesmo tempo
+     * */
+    private T pesquisar(T valor, Comparator comparador, No<T> raiz) {
+        if(raiz == null)
+            return null;
+
+        int resultadoComparacao  = comparador.compare(valor, raiz.getValor());
+
+        if(resultadoComparacao == 0)
+            return raiz.getValor();
+
+        T valorEncontrado = this.pesquisar(valor, comparador, raiz.getFilhoEsquerda());
+        if(valorEncontrado != null) {
+            valorEncontrado = this.pesquisar(valor, comparador, raiz.getFilhoDireita());
+        }
+
+        return valorEncontrado;
     }
 
     @Override
