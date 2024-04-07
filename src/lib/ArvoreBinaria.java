@@ -5,7 +5,9 @@
  */
 package lib;
 
+import java.util.ArrayDeque;
 import java.util.Comparator;
+import java.util.Deque;
 
 /**
  *
@@ -140,6 +142,12 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
     }
 
+    /**
+     * Esse método é recursivo porque achamos mais legível e limpo, apesar de consumir mais memória
+     * Chama o método recursivamente até chegar no último nó mais a direita, onde altD e altE vão recerber 0 da última chamada recursiva.
+     * As alturas são comparadas e retorna a maior altura mais um.
+     * Isso ocorre até voltar para a raiz, onde o último return é feito retornando o valor da altura.
+     * */
     @Override
     public int quantidadeNos() {
         return contarNosRecursivo(raiz);
@@ -154,14 +162,43 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return 1 + contLeft + contRight;
     }
 
+    /**Esse método utiliza uma fila para poder caminhar na árvore em nivel.
+     * Começa colocando a raiz da árvore na fila e iniciando um loop até a fila ficar vazia.
+     * Dentro do loop, remove o primeiro item da fila, coloca o contedudo desse item em uma string como toString
+     * e adicina o filho da esquerda e o da direita na fila caso eles existam, 
+     * depois repete esse processo até a fila estar vazia.
+     * */
     @Override
     public String caminharEmNivel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.    
+        if(this.raiz == null){//Caso a árvore seja vazia.
+            return "A árvore está vazia.";
+        }
+        else{
+            Deque<No> fila = new ArrayDeque<>();
+            fila.add(this.raiz);//Colaca a raiz na fila.
+            String s = "";
+            while (!fila.isEmpty()) {//Loop até a fila ficar vazia.
+                No atual = fila.removeFirst();//Remove o primeiro item da fila
+                s = "\n" + atual.getValor().toString();
+                if (atual.getFilhoEsquerda() != null) {//Adiciona o filho da esquerda na fila, caso ele exista.
+                    fila.add(atual.getFilhoEsquerda());
+                }
+                if (atual.getFilhoDireita() != null) {//Adiciona o filho da direita na fila, caso ele exista. 
+                    fila.add(atual.getFilhoDireita()); 
+                }
+            }
+            return s;
+        }
     }
     
     @Override
     public String caminharEmOrdem() {
-        return caminharEmOrdemRec(this.raiz);//Chama o método recursivo para caminhar em ordem. 
+        if(this.raiz == null){
+            return "A ávore está vazia.";
+        }
+        else{
+            return caminharEmOrdemRec(this.raiz);
+        }
     }
 
     /**
