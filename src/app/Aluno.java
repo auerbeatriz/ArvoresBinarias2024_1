@@ -34,5 +34,8 @@ public class Aluno  {
         this.nome = nome;
     }
 
-
+    public String toString(){
+        String s = "Aluno: " + this.getNome() + "\nMatricula: " + Integer.toString(this.getMatricula()) + "\n";
+        return s;
+    }
 }

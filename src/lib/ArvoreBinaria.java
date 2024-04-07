@@ -115,6 +115,12 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return this.alturaRec(this.raiz);//Chama a função recursiva para achar a altura.
     }
     
+    /**
+     * Esse método é recursivo porque achamos mais legível e limpo, apesar de consumir mais memória
+     * Chama o método recursivamente até chegar no último nó mais a direita, onde altD e altE vão recerber 0 da última chamada recursiva.
+     * As alturas são comparadas e retorna a maior altura mais um.
+     * Isso ocorre até voltar para a raiz, onde o último return é feito retornando o valor da altura.
+     * */
     public int alturaRec(No<T> no){
     	if (no == null){//Caso o nó seja nulo, retorna 0.
         	return 0;
@@ -123,9 +129,9 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         	return 0;
         }
         else{
-        	int altD = alturaRec(no.getFilhoDireita());
-        	int altE = alturaRec(no.getFilhoEsquerda());
-        	if (altD > altE){//Compara qual lado tem a maior altura
+        	int altD = alturaRec(no.getFilhoDireita());//Chama o método para o filho da direita
+        	int altE = alturaRec(no.getFilhoEsquerda());//Chama o método para o filho da esqueda
+        	if (altD > altE){//Compara qual lado tem a maior altura e retorna ele mais 1.
         		return 1 + altD;
         	}
         	else{
@@ -136,7 +142,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     @Override
     public int quantidadeNos() {
-        return contarNosRecursivo(raiz);//To change body of generated methods, choose Tools | Templates.
+        return contarNosRecursivo(raiz);
     }
     private int contarNosRecursivo(No<T> no) {
         if (no == null)
@@ -148,8 +154,6 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return 1 + contLeft + contRight;
     }
 
-
-
     @Override
     public String caminharEmNivel() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.    
@@ -157,7 +161,24 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     
     @Override
     public String caminharEmOrdem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.    
+        return caminharEmOrdemRec(this.raiz);//Chama o método recursivo para caminhar em ordem. 
     }
-        
+
+    /**
+     * Esse método é recursivo porque achamos mais legível e limpo, apesar de consumir mais memória
+     * Caminha até chegar no nó mais a esquerda, onde chama o toString do valor do nó.
+     * Retorna essa strig e adiciona o toString do nó pai e o nó pai chama recursivamente o método para o filho da direita.
+     * Repete o processo até passar por toda a árvore.
+     * */
+    public String caminharEmOrdemRec(No<T> n){
+        if(n == null){//Caso o nó seja null, retorna uma string vazia
+            return "";
+        }
+        else{
+            String s = caminharEmOrdemRec(n.getFilhoEsquerda());//Chama o método para o filho da esquerda.
+            s = s + "\n" + n.getValor().toString();
+            s = s + caminharEmOrdemRec(n.getFilhoDireita());//Chama o método para o filho da direita.
+            return s;
+        }
+    }
 }
