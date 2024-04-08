@@ -24,7 +24,6 @@ public class AppRelatorioArvoreBinaria {
         ComparadorAlunoPorNome compPorNome = new ComparadorAlunoPorNome();
         IArvoreBinaria<Aluno> arv;
         
-        
 //------Início do trecho a ser considerado nas questões 1, 2 e 3 do relatório-------------------------------
         //Instancio uma árvore binária. Lembre de ajustar o import para sua classe de árvore binária
         arv = new ArvoreBinaria(compPorMatricula);
@@ -42,7 +41,7 @@ public class AppRelatorioArvoreBinaria {
         System.out.println("Árvore Degenerada Criada");
         System.out.println("Quantidade de Nós: " + arv.quantidadeNos()+ " Altura: " + arv.altura());
 //------Fim do trecho citado nas questões 1, 2 e 3 do relatório-------------------------------
-/*
+
 //------Início do trecho citado nas questões 5, 6 e 7 do relatório-------------------------------
         arv = new ArvoreBinaria(compPorMatricula);
         //Chamo o gerador para inserir 100 elementos nessa árvore de forma que ela fique perfeitamente balanceada
@@ -54,7 +53,7 @@ public class AppRelatorioArvoreBinaria {
         System.out.println("Árvore Perfeitamente Balanceada Criada");
         System.out.println("Quantidade de Nós: " + arv.quantidadeNos()+ " Altura: " + arv.altura());
         arv = new ArvoreBinaria(compPorMatricula);
-        gerador.geraArvorePerfeitamenteBalanceada(1,1000,arv);
+        gerador.geraArvorePerfeitamenteBalanceada(1,1024,arv);
         System.out.println("Árvore Perfeitamente Balanceada Criada");
         System.out.println("Quantidade de Nós: " + arv.quantidadeNos()+ " Altura: " + arv.altura());
 //------Fim do trecho citado nas questões 5, 6 e 7 do relatório-------------------------------
@@ -77,7 +76,6 @@ public class AppRelatorioArvoreBinaria {
             System.out.println("Aluno encontrado: "+busca);
 //------Fim do trecho citado na questão 9 do relatório-------------------------------
 
-
 //------Início do trecho citado na questão 10 do relatório-------------------------------
         arv = new ArvoreBinaria(compPorMatricula);
         gerador.geraArvorePerfeitamenteBalanceada(1,50000,arv);
@@ -89,6 +87,5 @@ public class AppRelatorioArvoreBinaria {
         System.out.println(" Altura: " + arv.altura());
 //------Fim do trecho citado na questão 10 do relatório-------------------------------
 
- */
     }
 }
