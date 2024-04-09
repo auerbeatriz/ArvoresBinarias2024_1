@@ -88,7 +88,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
      *
      * Tedx with the dev: o primeiro pensamento foi analisar as subarvores em paralelo, mas isso consumiria
      * mais processamento do que o necessário, caso o nó já tivesse sido encontrado em alguma subarvore e estivesse
-     * analisando outra ao mesmo tempo
+     * analizando outra ao mesmo tempo
      * */
     private T pesquisar(T valor, Comparator comparador, No<T> raiz) {
         if(raiz == null)
@@ -107,9 +107,58 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return valorEncontrado;
     }
 
+
+    /**
+     * Esse método é recursivo pois achamos mais legível e limpo,
+     * apesar de consumir mais memória (também achei mais fácil fazer assim).
+     * Ele vai passando pela árvore, procurando o nó para remover.
+     * - A busca pelo nó a ser removido começa a partir da raiz.
+     * - Toda vez que encontramos um nó, comparamos seu valor com o valor que queremos remover.
+     * - Se encontramos o valor, ele é removido.
+     * - Se o valor procurado é menor, continuamos a busca na subárvore esquerda.
+     * - Se for maior, na subárvore direita.
+     * E assim vai até encontrar o nó que queremos remover. Quando encontramos, a remoção segue algumas regras:
+     * - Se o nó não tem filhos ou tem apenas um, ele é removido facilmente.
+     * - Se tem dois filhos, substituímos ele pelo seu "substituto natural" na árvore.
+     */
     @Override
     public T remover(T valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        raiz = removerRecursivo(raiz, valor);
+        return null;
+    }
+
+    private No<T> removerRecursivo(No<T> raiz, T valor) {
+        if (raiz == null)
+            return null;
+        int comparacao = comparador.compare(valor, raiz.getValor());
+        if (comparacao < 0) {
+            raiz.setFilhoEsquerda(removerRecursivo(raiz.getFilhoEsquerda(), valor));
+        }
+        else if (comparacao > 0) {
+            raiz.setFilhoDireita(removerRecursivo(raiz.getFilhoDireita(), valor));
+        }
+        else {
+            // Caso 1 e 2: nó sem filho ou com apenas um filho
+            if (raiz.getFilhoEsquerda() == null)
+                return raiz.getFilhoDireita();
+            else if (raiz.getFilhoDireita() == null)
+                return raiz.getFilhoEsquerda();
+            // Caso 3: nó com dois filhos
+            raiz.setValor(valorMinimo(raiz.getFilhoDireita()));
+            raiz.setFilhoDireita(removerRecursivo(raiz.getFilhoDireita(), raiz.getValor()));
+        }
+
+        return raiz;
+    }
+
+    // Método auxiliar para encontrar o valor mínimo na árvore
+    private T valorMinimo(No<T> no) {
+        T minimo = no.getValor();
+        while (no.getFilhoEsquerda() != null) {
+            minimo = no.getFilhoEsquerda().getValor();
+            no = no.getFilhoEsquerda();
+        }
+        return minimo;
     }
 
     @Override
