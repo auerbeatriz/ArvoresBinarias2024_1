@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app;
+package app.view;
 //Ajuste esse importe para que importe sua classe de Árvore binária
+import app.model.Aluno;
+import app.util.ComparadorAlunoPorMatricula;
+import app.util.ComparadorAlunoPorNome;
+import app.util.GeradorDeArvores;
 import lib.ArvoreBinaria;
 import lib.IArvoreBinaria;
 

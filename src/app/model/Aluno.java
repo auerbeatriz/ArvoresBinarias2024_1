@@ -1,4 +1,6 @@
-package app;
+package app.model;
+
+import java.util.List;
 
 /**
  *
@@ -11,12 +13,12 @@ package app;
 public class Aluno  {
     private int matricula;
     private String nome;
+    private List<Disciplina> disciplinasCursadas;
 
     public Aluno(int matricula, String nome){
         this.matricula = matricula;
-        this.nome = nome;        
+        this.nome = nome;
     }
-
 
     public int getMatricula() {
         return matricula;
@@ -34,8 +36,15 @@ public class Aluno  {
         this.nome = nome;
     }
 
+    public List<Disciplina> getDisciplinasCursadas() {
+        return disciplinasCursadas;
+    }
+
+    public void addDisciplinaCursada(Disciplina disciplina) {
+        this.disciplinasCursadas.add(disciplina);
+    }
+
     public String toString(){
-        String s = "Aluno: " + this.getNome() + "\nMatricula: " + Integer.toString(this.getMatricula()) + "\n";
-        return s;
+        return "Aluno: " + this.getNome() + "\nMatricula: " + Integer.toString(this.getMatricula()) + "\n";
     }
 }
