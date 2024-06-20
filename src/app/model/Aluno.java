@@ -1,5 +1,6 @@
 package app.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class Aluno  {
     public Aluno(int matricula, String nome){
         this.matricula = matricula;
         this.nome = nome;
+        this.disciplinasCursadas = new ArrayList<Disciplina>();
     }
 
     public int getMatricula() {

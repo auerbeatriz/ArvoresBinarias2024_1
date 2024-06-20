@@ -1,5 +1,6 @@
 package app.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Disciplina {
@@ -7,11 +8,11 @@ public class Disciplina {
     private String nome;
     private List<Disciplina> preRequisitos;
 
-    public Disciplina(int codigo, int cargaHoraria, String nome, List<Disciplina> preRequisitos) {
+    public Disciplina(int codigo, int cargaHoraria, String nome) {
+        this.nome = nome;
         this.codigo = codigo;
         this.cargaHoraria = cargaHoraria;
-        this.nome = nome;
-        this.preRequisitos = preRequisitos;
+        this.preRequisitos = new ArrayList<Disciplina>();
     }
 
     public int getCodigo() {
