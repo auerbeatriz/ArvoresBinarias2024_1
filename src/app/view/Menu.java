@@ -2,6 +2,7 @@ package app.view;
 
 import app.exception.AlunoNaoEncontradoException;
 import app.exception.DisciplinaNaoEncontradaException;
+import app.exception.PreRequisitoNaoCumpridoException;
 import app.model.Aluno;
 import app.model.Disciplina;
 import app.service.AlunoService;
@@ -60,7 +61,6 @@ public class Menu {
                 case 7:
                     this.excluirAlunoMatricula();
                     break;
-                // Adicione os demais casos
                 case 0:
                     System.out.println("Tchau!");
                     break;
@@ -137,17 +137,15 @@ public class Menu {
         int codigoDisciplina = s.nextInt();
         s.nextLine();
 
-        //TODO: EXCEPTION
-
-
         try {
             Disciplina disciplina = disciplinaService.consultarDisciplina(codigoDisciplina);
 
             alunoService.informarDisciplinaCursada(matricula, disciplina);
             System.out.println("Disciplina cursada registrada com sucesso.");
-        } catch (AlunoNaoEncontradoException e) {
-            System.out.println(e.getMessage());
-        } catch(DisciplinaNaoEncontradaException e) {
+        } catch (
+                AlunoNaoEncontradoException |
+                DisciplinaNaoEncontradaException |
+                PreRequisitoNaoCumpridoException e) {
             System.out.println(e.getMessage());
         }
         System.out.println("-----------------------------------------------------");

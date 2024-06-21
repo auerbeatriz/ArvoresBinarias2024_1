@@ -2,6 +2,7 @@ package app.service;
 
 import app.dao.AlunoDAO;
 import app.exception.AlunoNaoEncontradoException;
+import app.exception.PreRequisitoNaoCumpridoException;
 import app.model.Aluno;
 import app.model.Disciplina;
 
@@ -18,14 +19,14 @@ public class AlunoService {
 
     }
 
-    public void informarDisciplinaCursada(int matricula, Disciplina disciplina) throws AlunoNaoEncontradoException {
+    public void informarDisciplinaCursada(int matricula, Disciplina disciplina) throws AlunoNaoEncontradoException, PreRequisitoNaoCumpridoException {
         Aluno aluno = alunoDAO.consultarAlunoMatricula(matricula);
+        boolean podeCursarDisciplina = aluno.cursouPreRequisitos(disciplina.getPreRequisitos());
 
-        if(aluno != null && aluno.cursouPreRequisitos(disciplina.getPreRequisitos())) {
+        if(podeCursarDisciplina) {
              aluno.addDisciplinaCursada(disciplina);
         } else {
-            // TODO: EXCEPTION
-            System.out.println("Aluno não encontrado no sistema.");
+            throw new PreRequisitoNaoCumpridoException("Aluno não cumpriu algum pré-requisito da disciplina.");
         }
     }
 
