@@ -1,5 +1,7 @@
 package app.model;
 
+import app.exception.PrerequisiteNotMetException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,20 +24,19 @@ public class Aluno  {
         this.disciplinasCursadas = new ArrayList<Disciplina>();
     }
 
-    public int getMatricula() {
-        return matricula;
+    public Aluno(String nome) {
+        this.nome = nome;
     }
 
-    public void setMatricula(int matricula) {
+    public Aluno(int matricula) {
         this.matricula = matricula;
     }
 
+    public int getMatricula() {
+        return matricula;
+    }
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public List<Disciplina> getDisciplinasCursadas() {
@@ -46,7 +47,26 @@ public class Aluno  {
         this.disciplinasCursadas.add(disciplina);
     }
 
+    public boolean cursouPreRequisitos(List<Disciplina> disciplinas) {
+        for(Disciplina disciplina : disciplinas) {
+            if (!this.getDisciplinasCursadas().contains(disciplina)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public String toString(){
-        return "Aluno: " + this.getNome() + "\nMatricula: " + Integer.toString(this.getMatricula()) + "\n";
+        String disciplinas = "";
+        for(Disciplina disciplina : this.disciplinasCursadas) {
+            disciplinas += disciplina.getCodigo() + " - " + disciplina.getNome() + "\n";
+        }
+
+        String s = "Matrícula: " + this.getMatricula() + "\n" +
+                    "Nome do aluno: " + this.getNome() + "\n\n" +
+                    "*** Disciplinas cursadas ***\n" +
+                    disciplinas;
+        return s;
     }
 }

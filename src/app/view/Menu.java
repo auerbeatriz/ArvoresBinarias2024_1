@@ -43,6 +43,18 @@ public class Menu {
                 case 2:
                     cadastrarDisciplina();
                     break;
+                case 4:
+                    this.informarDisciplinaCursada();
+                    break;
+                case 5:
+                    this.consultarAlunoNome();
+                    break;
+                case 6:
+                    this.consultarAlunoMatricula();
+                    break;
+                case 7:
+                    this.excluirAlunoMatricula();
+                    break;
                 // Adicione os demais casos
                 case 0:
                     System.out.println("Tchau!");
@@ -83,6 +95,59 @@ public class Menu {
 
         disciplinaService.cadastrarDisciplina(codigo, nome, cargaHoraria);
         System.out.println("Disciplina cadastrada com sucesso.");
+        System.out.println("-----------------------------------------------------");
+    }
+
+    private void informarDisciplinaCursada() {
+        System.out.println("------------ INFORMAR DISCIPLINA CURSADA ------------");
+
+        System.out.print("Matrícula do aluno: ");
+        int matricula = s.nextInt();
+        s.nextLine();
+
+        System.out.print("Código da disciplina: ");
+        int codigoDisciplina = s.nextInt();
+        s.nextLine();
+
+        Disciplina disciplina = disciplinaService.consultaDisciplina(codigoDisciplina);
+        alunoService.informarDisciplinaCursada(matricula, disciplina);
+
+        System.out.println("Disciplina cursada registrada com sucesso.");
+        System.out.println("-----------------------------------------------------");
+    }
+
+    private void consultarAlunoNome() {
+        System.out.println("------------------ CONSULTAR ALUNO ------------------");
+
+        System.out.print("Nome do aluno: ");
+        String nome = s.nextLine();
+
+        Aluno aluno = alunoService.consultarAlunoNome(nome);
+        System.out.println(aluno);
+        System.out.println("-----------------------------------------------------");
+    }
+
+    private void consultarAlunoMatricula() {
+        System.out.println("------------------ CONSULTAR ALUNO ------------------");
+
+        System.out.print("Matrícula do aluno: ");
+        int matricula = s.nextInt();
+        s.nextLine();
+
+        Aluno aluno = alunoService.consultarAlunoMatricula(matricula);
+        System.out.println(aluno);
+        System.out.println("-----------------------------------------------------");
+    }
+
+    private void excluirAlunoMatricula() {
+        System.out.println("------------------- EXCLUIR ALUNO -------------------");
+
+        System.out.print("Matrícula do aluno: ");
+        int matricula = s.nextInt();
+        s.nextLine();
+
+        alunoService.excluirAluno(matricula);
+        System.out.println("Aluno excluído com sucesso.");
         System.out.println("-----------------------------------------------------");
     }
 }
