@@ -101,10 +101,10 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
         T valorEncontrado = this.pesquisar(valor, comparador, raiz.getFilhoEsquerda());
         if(valorEncontrado != null) {
-            valorEncontrado = this.pesquisar(valor, comparador, raiz.getFilhoDireita());
+            return valorEncontrado;
         }
 
-        return valorEncontrado;
+        return valorEncontrado = this.pesquisar(valor, comparador, raiz.getFilhoDireita());
     }
 
 
