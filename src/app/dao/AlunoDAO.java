@@ -29,7 +29,6 @@ public class AlunoDAO {
 
         return aluno;
     }
-
     public Aluno consultarAlunoMatricula(int matricula) throws AlunoNaoEncontradoException {
         Aluno alunoDummy = new Aluno(matricula);
         Aluno aluno = this.alunos.pesquisar(alunoDummy);
@@ -43,6 +42,10 @@ public class AlunoDAO {
 
     public Aluno excluirAluno(int matricula) throws AlunoNaoEncontradoException {
         Aluno aluno = this.consultarAlunoMatricula(matricula);
+        if(aluno == null) {
+            throw new AlunoNaoEncontradoException("Aluno não encontrado no sistema.");
+        }
+
         return this.alunos.remover(aluno);
     }
 }

@@ -15,6 +15,8 @@ public class Disciplina {
         this.preRequisitos = new ArrayList<Disciplina>();
     }
 
+    public Disciplina(int codigo){this.codigo = codigo;}
+
     public int getCodigo() {
         return codigo;
     }

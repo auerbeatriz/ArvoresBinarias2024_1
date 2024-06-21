@@ -1,6 +1,7 @@
 package app.view;
 
 import app.exception.AlunoNaoEncontradoException;
+import app.exception.DisciplinaNaoEncontradaException;
 import app.model.Aluno;
 import app.model.Disciplina;
 import app.service.AlunoService;
@@ -44,6 +45,9 @@ public class Menu {
                 case 2:
                     cadastrarDisciplina();
                     break;
+                case 3:
+                    informarprerequisitos();
+                    break;
                 case 4:
                     this.informarDisciplinaCursada();
                     break;
@@ -66,6 +70,28 @@ public class Menu {
         } while (opcao != 0);
     }
 
+    private void informarprerequisitos() {
+        System.out.println("------------------ INFORMAR PRÉ REQUISITO ------------------");
+
+        System.out.print("Código da Disciplina: ");
+        int codigo1 = s.nextInt();
+        s.nextLine();
+
+        System.out.print("Código do Pré-Requisito: ");
+        int codigo2 = s.nextInt();
+        s.nextLine();
+
+
+        try {
+            disciplinaService.informarPreRequisito(codigo1, codigo2);
+            System.out.println("Pré-Requisito cadastrado com sucesso.");
+        } catch (DisciplinaNaoEncontradaException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("-----------------------------------------------------");
+    }
+
     private void cadastrarAluno() {
         System.out.println("------------------ CADASTRO ALUNO ------------------");
 
@@ -74,6 +100,7 @@ public class Menu {
 
         System.out.print("Matrícula: ");
         int matricula = s.nextInt();
+        s.nextLine();
 
         alunoService.cadastrarAluno(nome, matricula);
         System.out.println("Aluno cadastrado com sucesso.");
@@ -94,7 +121,7 @@ public class Menu {
         int cargaHoraria = s.nextInt();
         s.nextLine();
 
-        disciplinaService.cadastrarDisciplina(codigo, nome, cargaHoraria);
+        disciplinaService.cadastrarDisciplina(codigo, cargaHoraria, nome);
         System.out.println("Disciplina cadastrada com sucesso.");
         System.out.println("-----------------------------------------------------");
     }
@@ -111,12 +138,16 @@ public class Menu {
         s.nextLine();
 
         //TODO: EXCEPTION
-        Disciplina disciplina = disciplinaService.consultaDisciplina(codigoDisciplina);
+
 
         try {
+            Disciplina disciplina = disciplinaService.consultarDisciplina(codigoDisciplina);
+
             alunoService.informarDisciplinaCursada(matricula, disciplina);
             System.out.println("Disciplina cursada registrada com sucesso.");
         } catch (AlunoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        } catch(DisciplinaNaoEncontradaException e) {
             System.out.println(e.getMessage());
         }
         System.out.println("-----------------------------------------------------");
@@ -172,4 +203,5 @@ public class Menu {
 
         System.out.println("-----------------------------------------------------");
     }
+
 }
