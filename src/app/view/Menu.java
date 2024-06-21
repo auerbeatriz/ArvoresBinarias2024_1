@@ -1,5 +1,6 @@
 package app.view;
 
+import app.exception.AlunoNaoEncontradoException;
 import app.model.Aluno;
 import app.model.Disciplina;
 import app.service.AlunoService;
@@ -109,10 +110,15 @@ public class Menu {
         int codigoDisciplina = s.nextInt();
         s.nextLine();
 
+        //TODO: EXCEPTION
         Disciplina disciplina = disciplinaService.consultaDisciplina(codigoDisciplina);
-        alunoService.informarDisciplinaCursada(matricula, disciplina);
 
-        System.out.println("Disciplina cursada registrada com sucesso.");
+        try {
+            alunoService.informarDisciplinaCursada(matricula, disciplina);
+            System.out.println("Disciplina cursada registrada com sucesso.");
+        } catch (AlunoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("-----------------------------------------------------");
     }
 
@@ -122,8 +128,14 @@ public class Menu {
         System.out.print("Nome do aluno: ");
         String nome = s.nextLine();
 
-        Aluno aluno = alunoService.consultarAlunoNome(nome);
-        System.out.println(aluno);
+        Aluno aluno = null;
+        try {
+            aluno = alunoService.consultarAlunoNome(nome);
+            System.out.println(aluno);
+        } catch (AlunoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.println("-----------------------------------------------------");
     }
 
@@ -134,8 +146,13 @@ public class Menu {
         int matricula = s.nextInt();
         s.nextLine();
 
-        Aluno aluno = alunoService.consultarAlunoMatricula(matricula);
-        System.out.println(aluno);
+        try {
+            Aluno aluno = alunoService.consultarAlunoMatricula(matricula);
+            System.out.println(aluno);
+        } catch (AlunoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.println("-----------------------------------------------------");
     }
 
@@ -146,8 +163,13 @@ public class Menu {
         int matricula = s.nextInt();
         s.nextLine();
 
-        alunoService.excluirAluno(matricula);
-        System.out.println("Aluno excluído com sucesso.");
+        try {
+            alunoService.excluirAluno(matricula);
+            System.out.println("Aluno excluído com sucesso.");
+        } catch (AlunoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.println("-----------------------------------------------------");
     }
 }

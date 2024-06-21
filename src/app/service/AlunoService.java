@@ -1,6 +1,7 @@
 package app.service;
 
 import app.dao.AlunoDAO;
+import app.exception.AlunoNaoEncontradoException;
 import app.model.Aluno;
 import app.model.Disciplina;
 
@@ -17,8 +18,8 @@ public class AlunoService {
 
     }
 
-    public void informarDisciplinaCursada(int matricula, Disciplina disciplina) {
-        Aluno aluno = alunoDAO.getAlunoPorMatricula(matricula);
+    public void informarDisciplinaCursada(int matricula, Disciplina disciplina) throws AlunoNaoEncontradoException {
+        Aluno aluno = alunoDAO.consultarAlunoMatricula(matricula);
 
         if(aluno != null && aluno.cursouPreRequisitos(disciplina.getPreRequisitos())) {
              aluno.addDisciplinaCursada(disciplina);
@@ -28,15 +29,15 @@ public class AlunoService {
         }
     }
 
-    public Aluno consultarAlunoNome(String nome) {
+    public Aluno consultarAlunoNome(String nome) throws AlunoNaoEncontradoException {
         return alunoDAO.consultarAlunoNome(nome);
     }
 
-    public Aluno consultarAlunoMatricula(int matricula) {
+    public Aluno consultarAlunoMatricula(int matricula) throws AlunoNaoEncontradoException {
         return alunoDAO.consultarAlunoMatricula(matricula);
     }
 
-    public void excluirAluno(int matricula) {
+    public void excluirAluno(int matricula) throws AlunoNaoEncontradoException {
         alunoDAO.excluirAluno(matricula);
     }
 }
