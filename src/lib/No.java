@@ -14,12 +14,13 @@ public class No<T> {
     private T valor;
     private No<T> filhoDireita;
     private No<T> filhoEsquerda;
+    private int altura;
 
-    
     public No(T valor){
         this.valor = valor;
         this.filhoDireita = null;
         this.filhoEsquerda = null;
+        this.altura = 0;
     }
     
     /**
@@ -63,6 +64,26 @@ public class No<T> {
     public void setFilhoEsquerda(No<T> filhoEsquerda) {
         this.filhoEsquerda = filhoEsquerda;
     }
-    
+
+    public int getAltura() {
+        return this.altura;
+    }
+    public void setAltura(int altura) {
+        this.altura = altura;
+    }
+
+    public int fatorBalanceamento() {
+        int alturaDireita = -1;
+        int alturaEsquerda = -1;
+
+        if(this.filhoDireita != null) {
+            alturaDireita = this.filhoDireita.getAltura();
+        }
+        if(this.filhoEsquerda != null) {
+            alturaEsquerda = this.filhoEsquerda.getAltura();
+        }
+
+        return alturaEsquerda - alturaDireita;
+    }
     
 }

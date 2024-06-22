@@ -34,16 +34,18 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
      * Senão, busca recursivamente o ponto de inserção analisando a subarvore correspondente, seja o valor
      * de inserção menor ou maior que o valor do nó raíz analisado
      * */
-    private No<T> adicionar(No<T> raiz, T novoValor) {
+    protected No<T> adicionar(No<T> raiz, T novoValor) {
         if(raiz == null) {
             raiz = new No<T>(novoValor);
         }
         else {
-            if(this.comparador.compare(novoValor, raiz.getValor()) < 0)
+            if (this.comparador.compare(novoValor, raiz.getValor()) < 0)
                 raiz.setFilhoEsquerda(this.adicionar(raiz.getFilhoEsquerda(), novoValor));
             else
                 raiz.setFilhoDireita(this.adicionar(raiz.getFilhoDireita(), novoValor));
         }
+
+        this.setAltura(raiz);
 
         return raiz;
     }
@@ -266,5 +268,11 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
             s = s + caminharEmOrdemRec(n.getFilhoDireita());//Chama o método para o filho da direita.
             return s;
         }
+    }
+
+    protected void setAltura(No<T> raiz) {
+        int alturaEsquerda = this.alturaRec(raiz.getFilhoEsquerda());
+        int alturaDireita = this.alturaRec(raiz.getFilhoDireita());
+        raiz.setAltura(Math.max(alturaEsquerda, alturaDireita) + 1);
     }
 }

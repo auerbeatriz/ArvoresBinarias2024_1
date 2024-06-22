@@ -15,6 +15,9 @@ public class ArvoreAVL<T> extends ArvoreBinaria<T> {
         raizDesbalanceada.setFilhoDireita(novaRaiz.getFilhoEsquerda());
         novaRaiz.setFilhoEsquerda(raizDesbalanceada);
 
+        this.setAltura(raizDesbalanceada);
+        this.setAltura(novaRaiz);
+
         return novaRaiz;
     }
 
@@ -22,6 +25,9 @@ public class ArvoreAVL<T> extends ArvoreBinaria<T> {
         No<T> novaRaiz = raizDesbalanceada.getFilhoEsquerda();
         raizDesbalanceada.setFilhoEsquerda(novaRaiz.getFilhoDireita());
         novaRaiz.setFilhoDireita(raizDesbalanceada);
+
+        this.setAltura(raizDesbalanceada);
+        this.setAltura(novaRaiz);
 
         return novaRaiz;
     }
