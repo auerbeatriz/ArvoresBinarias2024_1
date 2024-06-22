@@ -106,7 +106,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
             return valorEncontrado;
         }
 
-        return valorEncontrado = this.pesquisar(valor, comparador, raiz.getFilhoDireita());
+        return this.pesquisar(valor, comparador, raiz.getFilhoDireita());
     }
 
 
