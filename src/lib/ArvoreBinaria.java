@@ -129,7 +129,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return null;
     }
 
-    private No<T> removerRecursivo(No<T> raiz, T valor) {
+    protected No<T> removerRecursivo(No<T> raiz, T valor) {
         if (raiz == null)
             return null;
         int comparacao = comparador.compare(valor, raiz.getValor());

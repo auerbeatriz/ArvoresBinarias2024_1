@@ -10,10 +10,8 @@ public class ArvoreAVL<T> extends ArvoreBinaria<T> {
 
     //Implementar métodos para efetuar o balanceamento e sobrescrever método de adicionar elemento...
 
-    @Override
-    protected No<T> adicionar(No<T> raiz, T novoValor) {
-        raiz = super.adicionar(raiz, novoValor);
 
+    private No<T> balancearArvore(No<T> raiz){
         if(raiz.fatorBalanceamento() > 1) {
             if(raiz.getFilhoDireita().fatorBalanceamento() > 0)
                 raiz = this.rotacaoEsquerda(raiz);
@@ -26,7 +24,12 @@ public class ArvoreAVL<T> extends ArvoreBinaria<T> {
             else
                 raiz = this.rotacaoEsquerdaDireita(raiz);
         }
-
+        return raiz;
+    }
+    @Override
+    protected No<T> adicionar(No<T> raiz, T novoValor) {
+        raiz = super.adicionar(raiz, novoValor);
+        raiz= balancearArvore(raiz);
         return raiz;
     }
 
@@ -62,5 +65,11 @@ public class ArvoreAVL<T> extends ArvoreBinaria<T> {
         No<T> novaRaiz = raizDesbalanceada.getFilhoDireita();
         raizDesbalanceada.setFilhoDireita(this.rotacaoDireita(novaRaiz));
         return this.rotacaoEsquerda(raizDesbalanceada);
+    }
+
+    protected No<T> excluir(No<T> raiz, T valor){
+        raiz = super.removerRecursivo(raiz, valor);
+        raiz = balancearArvore(raiz);
+        return raiz;
     }
 }
