@@ -10,6 +10,26 @@ public class ArvoreAVL<T> extends ArvoreBinaria<T> {
 
     //Implementar métodos para efetuar o balanceamento e sobrescrever método de adicionar elemento...
 
+    @Override
+    protected No<T> adicionar(No<T> raiz, T novoValor) {
+        raiz = super.adicionar(raiz, novoValor);
+
+        if(raiz.fatorBalanceamento() > 1) {
+            if(raiz.getFilhoDireita().fatorBalanceamento() > 0)
+                raiz = this.rotacaoEsquerda(raiz);
+            else
+                raiz = this.rotacaoDireitaEsquerda(raiz);
+        }
+        else if(raiz.fatorBalanceamento() < -1) {
+            if(raiz.getFilhoEsquerda().fatorBalanceamento() < 0)
+                raiz = this.rotacaoDireita(raiz);
+            else
+                raiz = this.rotacaoEsquerdaDireita(raiz);
+        }
+
+        return raiz;
+    }
+
     private No<T> rotacaoEsquerda(No<T> raizDesbalanceada) {
         No<T> novaRaiz = raizDesbalanceada.getFilhoDireita();
         raizDesbalanceada.setFilhoDireita(novaRaiz.getFilhoEsquerda());

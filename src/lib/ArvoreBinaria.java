@@ -270,6 +270,10 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
     }
 
+    /**
+     * Nós estamos usando o método da árvore para calcular as alturas porque pode ser que filhoEsquerdo ou filhoDireito
+     * sejam nulos, e aí lançaria um NullPointerException
+     * */
     protected void setAltura(No<T> raiz) {
         int alturaEsquerda = this.alturaRec(raiz.getFilhoEsquerda());
         int alturaDireita = this.alturaRec(raiz.getFilhoDireita());

@@ -66,24 +66,35 @@ public class No<T> {
     }
 
     public int getAltura() {
-        return this.altura;
+        return this.getAltura(this);
     }
+
+    /**
+     * Calcula a altura do nó com base na altura da subárvore mais profunda
+     * Primeiro pesquisa a altura da subárvore esquerda
+     * Depois a altura da subárvore direita
+     * Por fim, manda a altura mais alta
+     * */
+    private int getAltura(No<T> raiz) {
+        if(raiz == null)
+            return -1;
+        else {
+            int alturaDireita = this.getAltura(raiz.filhoDireita);
+            int alturaEsquerda = this.getAltura(raiz.filhoEsquerda);
+
+            return Math.max(alturaDireita, alturaEsquerda) + 1;
+        }
+    }
+
+    /**
+     * De acordo com a teoria, o FB = Hd - He
+     * */
+    public int fatorBalanceamento() {
+        return this.getAltura(this.filhoDireita) - this.getAltura(this.filhoEsquerda);
+    }
+
     public void setAltura(int altura) {
         this.altura = altura;
-    }
-
-    public int fatorBalanceamento() {
-        int alturaDireita = -1;
-        int alturaEsquerda = -1;
-
-        if(this.filhoDireita != null) {
-            alturaDireita = this.filhoDireita.getAltura();
-        }
-        if(this.filhoEsquerda != null) {
-            alturaEsquerda = this.filhoEsquerda.getAltura();
-        }
-
-        return alturaEsquerda - alturaDireita;
     }
     
 }
